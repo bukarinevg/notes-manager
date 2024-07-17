@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
+import StoreProvider from "./StoreProvider";
 config.autoAddCss = false; 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="p-8 min-h-screen bg-lightSecondary">
-        {children}
+          <StoreProvider>
+            {children}
+          </StoreProvider>
         </div>
       </body>
     </html>

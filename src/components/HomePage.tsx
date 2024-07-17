@@ -8,6 +8,7 @@ import Note, { INote } from "@/models/Note";
 import AddNoteForm from "@/components/AddNoteForm";
 import Card from "@/components/Card";
 import Modal from "@/components/Modal";
+import StoreProvider from "@/app/StoreProvider";
 
 export default function HomePage({
     existingNotes = [],

@@ -5,10 +5,18 @@ import { createNote } from "@/lib/actions";
 import { useEffect } from "react";
 import { INote } from "@/models/Note";
 
+import { increment, decrement } from "@/lib/features/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+
 export default function AddNoteForm(
    {notes, setNotes} : {notes: INote[], setNotes: (notes: INote[]) => void}
 ) 
 {
+
+    const count = useSelector((state : RootState) => state.counter.value)
+    const dispatchState = useDispatch();
+
     const[ state, dispatch ] = useFormState( createNote, 
         {errors: {}, message: '', note: {} as INote});
 
@@ -19,6 +27,23 @@ export default function AddNoteForm(
 
     return (
         <form className="w-full" action={dispatch}>
+
+<div>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatchState(increment())}
+        >
+          Increment
+        </button>
+        <span>{count}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatchState(decrement())}
+        >
+          Decrement
+        </button>
+      </div>
+
             <div className="mb-4">
                 <label htmlFor="title" className="text-sm font-medium text-gray-700">Title</label>
                 <input type="text" name="title" id="title" className="mt-1 p-2 w-full border border-gray-300 rounded-md text-darkPrimary"  required />
@@ -41,3 +66,4 @@ export default function AddNoteForm(
         </form>
     );
 }
+
