@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card {
+      @apply mb-4 p-4 flex rounded-2xl flex-col justify-center items-start transition-all duration-300 bg-lightPrimary;
+      // @apply shadow-custom;
+  
+      &:hover {
+        @apply -translate-y-1;
+      }
+
+      &__icon{
+        @apply h-5;
+      }
+      
+      
+      &__title {
+          @apply font-bold md:text-2xl text-left text-darkPrimary border-b border-lightSecondary w-full pb-4;
+      }
+
+      &__description{
+          @apply mt-4 text-left text-darkSecondary w-full;
+          p{
+            @apply pt-2 pb-2;
+            &:hover{
+              @apply animate-bounce;
+            }
+          
+          }
+      }
+      
+      &::-webkit-scrollbar {
+        @apply w-3
+      }
+      
+      &::-webkit-scrollbar-track {
+        @apply bg-lightPrimary
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        @apply bg-scrollBarThumb border-none;
+      }
+      
+      &::-webkit-scrollbar-thumb:hover {
+        @apply bg-scrollBarThumbHover
+      }
+      
+      @apply shadow-custom;
+
+  }
+
+  .block{
+      @apply bg-lightPrimary ;
+  }
+}
+
+
+
