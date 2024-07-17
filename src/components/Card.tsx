@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { INote } from "@/models/Note";
+import { deleteNote } from "@/lib/actions";
 
 export default function Card(
     {
@@ -16,7 +17,16 @@ export default function Card(
     }
 )  {
 
-   
+    const [isEditing, setIsEditing] = useState(false);
+
+    const handleEdit = () => {
+        setIsEditing(!isEditing);   
+    }
+
+    const handleDelete = () => {
+        deleteNote(note._id.toString());
+    }
+
     return (
         <>
             <div className="card ">
@@ -27,8 +37,8 @@ export default function Card(
                 </div>
                 <div className="flex flex-col justify-around items-end">
                    
-                    <FontAwesomeIcon icon={faEdit} className="text-darkPrimary cursor-pointer" />
-                    <FontAwesomeIcon icon={faTrash} className="text-red-500 cursor-pointer" />
+                    <FontAwesomeIcon onClick={handleEdit} icon={faEdit} className="text-darkPrimary cursor-pointer" />
+                    <FontAwesomeIcon onClick={handleDelete} icon={faTrash} className="text-red-500 cursor-pointer" />
                      
                 </div>
                 </div>

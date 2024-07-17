@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,7 +8,8 @@ import Note, { INote } from "@/models/Note";
 import AddNoteForm from "@/components/AddNoteForm";
 import Card from "@/components/Card";
 import Modal from "@/components/Modal";
-import StoreProvider from "@/app/StoreProvider";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { add } from "@/lib/features/notesSlice";
 
 export default function HomePage({
     existingNotes = [],
@@ -17,10 +18,15 @@ export default function HomePage({
 }) {
   const [modalStatus, setModalStatus] = useState(false);
   const [formKey, setFormKey] = useState(0);
-  const [notes, setNotes] = useState(existingNotes);
+  const notes = useAppSelector((state) => state.notes.list);
+  const hasDispatched = useRef(false);
+  const dispatchState = useAppDispatch();
 
   useEffect(() => {
-    console.log('notes');
+    if(notes.length === 0 && !hasDispatched.current){
+      dispatchState(add(existingNotes));
+      hasDispatched.current = true; // Mark as dispatched
+    } 
     setModalStatus(false);
   }, [notes]);
 
@@ -36,16 +42,18 @@ export default function HomePage({
           onClick={handleModalAddNoteForm} />
         </header>
 
-        <main className="mt-3">
-            {notes.map((note) => (
-                <Card key={note._id.toString()} note={note} />
-            ))}
-        </main>
-
+        {
+          notes.length > 0 &&
+          <main className="mt-3">
+              {notes.map((note) => (
+                  note && note._id &&
+                  <Card key={note._id.toString()} note={note} />
+              ))}
+          </main>
+        }
         <Modal title="Add note" modalStatus={modalStatus} setModal={setModalStatus}>
-          <AddNoteForm key={formKey} notes={notes} setNotes={setNotes} />
+          <AddNoteForm key={formKey}  />
         </Modal>
     </>
-
   );
 }

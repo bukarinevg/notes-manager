@@ -24,28 +24,42 @@ export async function createNote(
             title: queryData.get("title"),
             content: queryData.get("content"),
         };
-        console.log(data);
+        
         const newNote = new Note(data);
-
-        // Step 3: Save the new Note to the database
-        await newNote.save();
 
         console.log(newNote);
 
-        // Step 4: Update createNoteState with a success message
+        console.log(await newNote.save());
+
+       
+
         return {
             note: newNote,
             errors: {
-                
             },
             message: "Note created successfully",
         };
     } catch (error) {
         console.error("Failed to create note:", error);
-        // Update createNoteState with error information
         return {
             note: {} as INote,
             message: 'Failed to create note. Please try again.',
+        };
+    }
+}
+
+export async function deleteNote(_id: string){
+    await connectToDatabase();
+    try {
+        await Note.findByIdAndDelete(_id);
+        return {
+            message: 'Note deleted successfully',
+        };
+    }
+    catch(error){
+        console.error("Failed to delete note:", error);
+        return {
+            message: 'Failed to delete note. Please try again.',
         };
     }
 }

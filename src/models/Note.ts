@@ -4,11 +4,11 @@ interface INote extends Document {
   _id: mongoose.Schema.Types.ObjectId;
   title: string;
   content: string;
-  category: mongoose.Schema.Types.ObjectId;
+  category?: mongoose.Schema.Types.ObjectId;
 }
 
 const NoteSchema: Schema = new Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+  _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
   title: {
     type: String,
     required: true,

@@ -6,29 +6,32 @@ import { useEffect } from "react";
 import { INote } from "@/models/Note";
 
 import { increment, decrement } from "@/lib/features/counterSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/lib/store";
+import {add} from "@/lib/features/notesSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export default function AddNoteForm(
-   {notes, setNotes} : {notes: INote[], setNotes: (notes: INote[]) => void}
+//    {notes} : {notes: INote[], setNotes: (notes: INote[]) => void}
 ) 
 {
+    // const count = useAppSelector((state) => state.counter.value);
 
-    const count = useSelector((state : RootState) => state.counter.value)
-    const dispatchState = useDispatch();
+    const dispatchState = useAppDispatch();
 
     const[ state, dispatch ] = useFormState( createNote, 
         {errors: {}, message: '', note: {} as INote});
 
     useEffect(() => {
         if(state.note._id)
-            setNotes([...notes, state.note]);
+        {
+            dispatchState(add(state.note));
+        }
     }, [ state.note ]);
 
     return (
         <form className="w-full" action={dispatch}>
 
-<div>
+{/* 
+ <div>
         <button
           aria-label="Increment value"
           onClick={() => dispatchState(increment())}
@@ -42,7 +45,8 @@ export default function AddNoteForm(
         >
           Decrement
         </button>
-      </div>
+      </div>  */}
+    
 
             <div className="mb-4">
                 <label htmlFor="title" className="text-sm font-medium text-gray-700">Title</label>
