@@ -10,11 +10,8 @@ import { addNote} from "@/lib/features/notesSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export default function AddNoteForm(
-//    {notes} : {notes: INote[], setNotes: (notes: INote[]) => void}
 ) 
 {
-    // const count = useAppSelector((state) => state.counter.value);
-
     const dispatchState = useAppDispatch();
 
     const[ state, dispatch ] = useFormState( createNote, 
@@ -29,31 +26,12 @@ export default function AddNoteForm(
 
     return (
         <form className="w-full" action={dispatch}>
-
-{/* 
- <div>
-        <button
-          aria-label="Increment value"
-          onClick={() => dispatchState(increment())}
-        >
-          Increment
-        </button>
-        <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatchState(decrement())}
-        >
-          Decrement
-        </button>
-      </div>  */}
-    
-
             <div className="mb-4">
-                <label htmlFor="title" className="text-sm font-medium text-gray-700">Title</label>
+                <label htmlFor="title" className="text-sm font-medium text-gray-600">Title</label>
                 <input type="text" name="title" id="title" className="mt-1 p-2 w-full border border-gray-300 rounded-md text-darkPrimary"  required />
             </div>
             <div className="mb-4">
-                <label htmlFor="content" className="text-sm font-medium text-gray-700">Content</label>
+                <label htmlFor="content" className="text-sm font-medium text-gray-600">Content</label>
                 <textarea required name="content" id="content" className="text-darkPrimary mt-1 p-2 w-full border border-gray-300 rounded-md"></textarea>
             </div>
             <div className="text-red-500 text-sm mb-4">{state.message}</div>

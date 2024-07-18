@@ -57,3 +57,22 @@ export default function HomePage({
     </>
   );
 }
+
+{/* 
+ <div>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatchState(increment())}
+        >
+          Increment
+        </button>
+        <span>{count}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatchState(decrement())}
+        >
+          Decrement
+        </button>
+      </div>  */
+}
+    
