@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Note, { INote } from "@/models/Note";
+import { updateNote } from "../actions";
 
 
 
@@ -16,8 +17,7 @@ const notesSlice = createSlice({
   name: "notes",
   initialState,
   reducers: {
-    add: (state, action) => {
-
+    addNote: (state, action) => {
       if (action.payload instanceof Array) {
         for (let note of action.payload) {
           if (note) {
@@ -31,11 +31,17 @@ const notesSlice = createSlice({
       state.list.push(action.payload);
       
     },
-    remove: (state, action) => {
+    removeNote: (state, action) => {
         state.list = state.list.filter((note) => note._id !== action.payload);
+    },
+    editNote: (state, action) => {
+      const noteIndex = state.list.findIndex((note) => note._id === action.payload._id);
+      if (noteIndex !== -1) {
+        state.list[noteIndex] = action.payload;
+      }
     },
   },
 });
 
-export const { add, remove } = notesSlice.actions;
+export const { addNote, removeNote, editNote } = notesSlice.actions;
 export default notesSlice.reducer;

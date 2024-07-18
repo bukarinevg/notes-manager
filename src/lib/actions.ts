@@ -3,7 +3,7 @@
 import Category from "@/models/Category";
 import Note, { INote } from "@/models/Note";
 import connectToDatabase from "@/lib/mongoose";
-
+import { ObjectId } from "mongoose";
 
 type createNoteState = {
     errors?: {
@@ -18,21 +18,13 @@ export async function createNote(
     queryData: FormData,
 ){
     await connectToDatabase();
-
     try {
         const data = {
             title: queryData.get("title"),
             content: queryData.get("content"),
         };
-        
-        const newNote = new Note(data);
-
-        console.log(newNote);
-
-        console.log(await newNote.save());
-
-       
-
+        const newNote = new Note(data)
+        await newNote.save();
         return {
             note: newNote,
             errors: {
@@ -44,6 +36,33 @@ export async function createNote(
         return {
             note: {} as INote,
             message: 'Failed to create note. Please try again.',
+        };
+    }
+}
+
+export async function updateNote(
+    id: ObjectId,
+    prevState: createNoteState,
+    queryData: FormData,
+){
+    await connectToDatabase();
+    try {
+        const data = {
+            title: queryData.get("title"),
+            content: queryData.get("content"),
+        };
+        const updatedNote = await Note.findByIdAndUpdate(id, data, {new: true});
+        return {
+            note: updatedNote,
+            errors: {
+            },
+            message: "Note updated successfully",
+        };
+    } catch (error) {
+        console.error("Failed to update note:", error);
+        return {
+            note: {} as INote,
+            message: 'Failed to update note. Please try again.',
         };
     }
 }

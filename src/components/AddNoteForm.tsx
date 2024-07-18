@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { INote } from "@/models/Note";
 
 import { increment, decrement } from "@/lib/features/counterSlice";
-import {add} from "@/lib/features/notesSlice";
+import { addNote} from "@/lib/features/notesSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export default function AddNoteForm(
@@ -23,7 +23,7 @@ export default function AddNoteForm(
     useEffect(() => {
         if(state.note._id)
         {
-            dispatchState(add(state.note));
+            dispatchState(addNote(state.note));
         }
     }, [ state.note ]);
 

@@ -5,7 +5,7 @@ import notesSliceReducer  from './features/notesSlice'
 export const makeStore = () => {
   return configureStore({
     reducer: {
-     
+      counter: counterReducer,
       notes: notesSliceReducer,
     }
   })

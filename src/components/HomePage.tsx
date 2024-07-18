@@ -9,7 +9,7 @@ import AddNoteForm from "@/components/AddNoteForm";
 import Card from "@/components/Card";
 import Modal from "@/components/Modal";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { add } from "@/lib/features/notesSlice";
+import { addNote } from "@/lib/features/notesSlice";
 
 export default function HomePage({
     existingNotes = [],
@@ -24,7 +24,7 @@ export default function HomePage({
 
   useEffect(() => {
     if(notes.length === 0 && !hasDispatched.current){
-      dispatchState(add(existingNotes));
+      dispatchState(addNote(existingNotes));
       hasDispatched.current = true; // Mark as dispatched
     } 
     setModalStatus(false);
